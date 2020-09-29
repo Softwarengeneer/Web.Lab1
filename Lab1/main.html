@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PipZdec</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<script type="text/javascript">
+    function validate(input){
+        input.value = input.value.replace(/[^0-9,.-]/g,'').replace(/,/, ".");
+        if(isNaN(input.value) && input.value !== "-")
+            input.value = "";
+
+        if(input.value > 5)
+            input.value = 5;
+        if(input.value < -5)
+            input.value = -5;
+
+        if(input === document.getElementsByName("yValue")[0] && input.value < -5) {
+            input.value = -5;
+        }
+        if(input === document.getElementsByName("xValue")[0] && input.value > 5) {
+            input.value = 5;
+        }
+
+        if(input.value.length > 8){
+            input.value = input.value.slice(0, -1);
+        }
+
+    }
+</script>
+<div id="container">
+    <div id="header">
+        <h2>Лабораторная работа №1 по Web-Программированию</h2>
+        <h3>Выполнил: Федоров Никита, Группа Р3232</h3>
+    </div>
+
+
+
+    <div id="sidebar">
+        <form action="table.php" method="get">
+        <h2>КартинОчка</h2>
+
+            <tr>
+                <td align="center" width="30%" id="image">
+                    <img class="area" title="Areas" width="80%" src="picture.jpg"/>
+
+                </td>
+
+    </div>
+
+    <div id="content">
+        <h2>Вводи скорее кординаты</h2>
+        <td align="center" width="70%">
+            <h2 id="enterx">
+                Выберите X:
+            </h2>
+            <label for="radiox-4">-4</label><input id="radiox-4" name="radiox" type="radio" value="-4" required/>
+            <label for="radiox-3">-3</label><input id="radiox-3" name="radiox" type="radio" value="-3" required/>
+            <label for="radiox-3">-2</label><input id="radiox-2" name="radiox" type="radio" value="-2" required/>
+            <label for="radiox-1">-1</label><input id="radiox-1" name="radiox" type="radio" value="-1" required/>
+            <label for="radiox0">0</label><input id="radiox0" name="radiox" type="radio" value="0" required/>
+            <label for="radiox1">1</label><input id="radiox1" name="radiox" type="radio" value="1" required/>
+            <label for="radiox2">2</label><input id="radiox2" name="radiox" type="radio" value="2"required/>
+            <label for="radiox3">3</label><input id="radiox3" name="radiox" type="radio" value="3"required/>
+            <label for="radiox4">4</label><input id="radiox4" name="radiox" type="radio" value="4"required/>
+            <p id="messagex" ><br></p>
+
+            <h2 id="entery">
+                Введите Y в диапозоне (-5;5)
+            </h2>
+            <input type="text" id="yValue" name="radioy" oninput="validate(this)" required>
+            <p id="messagey"><br></p>
+
+            <h2 id="enterr">
+                Выберите R:
+            </h2>
+            <label for="r1">1</label><input id="r1" name="radius" type="checkbox" value="1" />
+            <label for="r2">2</label><input id="r2" name="radius" type="checkbox" value="2" />
+            <label for="r3">3</label><input id="r3" name="radius" type="checkbox" value="3" />
+            <label for="r4">4</label><input id="r4" name="radius" type="checkbox" value="4" />
+            <label for="r5">5</label><input id="r5" name="radius" type="checkbox" value="5" />
+            <p id="messager"><br></p>
+            <p id="buttons">
+                <button id="suputton" name="suputton" type="submit">Отправить...</button>
+            </p>
+            </form>
+        </td>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    <div id="footer">
+        <h2>Возникли вопросы? Обратитесь к <a href="http://vk.com/werner_lw">разработчику.</a></h2>
+    </div>
+</div>
+</body>
+</html>
