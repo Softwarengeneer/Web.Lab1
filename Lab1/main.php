@@ -14,7 +14,7 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
 <html>
 <head>
     <meta charset="utf-8">
-    <title>PipZdec</title>
+    <title>PipTUT</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -24,23 +24,34 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
         if(isNaN(input.value) && input.value !== "-")
             input.value = "";
 
-
         if(input === document.getElementsByName("radioy")[0] && input.value <= -5){
-            input.value = -5;
+            input.value = -4.99999;
         } else if(input === document.getElementsByName("radioy")[0] && input.value >= 5){
-            input.value = 5;
+            input.value = 4.99999;
         }
 
         if(input.value.length > 8){
             input.value = input.value.slice(0, -1);
         }
+    }
 
+    function verify() {
+        const lbl = document.getElementById('enterr');
+        if (!Array.prototype.some.call(document.querySelectorAll('input[type=checkbox]'), elem => elem.checked)) {
+            lbl.style.fontWeight = 'bold';
+            lbl.style.color = 'red';
+            alert('А поч не ввел радиус?');
+            event.preventDefault();
+        } else {
+            lbl.style.fontWeight = 'inherit';
+            lbl.style.color = 'inherit';
+        }
     }
 </script>
 <div id="container">
     <div id="header">
         <h2>Лабораторная работа №1 по Web-Программированию</h2>
-        <h3>Выполнил: Федоров Никита, Группа Р3232</h3>
+        <h3>Выполнил: Федоров Никита, Группа Р3232, Вариант 2820</h3>
     </div>
 
 
@@ -77,11 +88,11 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
 
                 date_default_timezone_set("Europe/Moscow");
 
-                $valid = is_numeric($radiox) && is_numeric($radioy) && is_numeric($radius) && $radiox >= -4
-                    && $radiox <= 4 && $radioy >= -5 && $radioy <= 5 && filter_var($radius, FILTER_VALIDATE_INT) && filter_var($radiox, FILTER_VALIDATE_INT) !== FALSE
-                    && $radius >= 1 && $radius <= 5;
+                $validX = is_numeric($radiox) && $radiox >= -4 && $radiox <= 4;
+                $validY = is_numeric($radioy) && $radioy > -5 && $radioy < 5 && filter_var($radiox, FILTER_VALIDATE_INT);
+                $validR = is_numeric($radius) && filter_var($radius, FILTER_VALIDATE_INT) && $radius >= 1 && $radius <= 5;
 
-                if ($valid) {
+                if ($validX && $validY && $validR) {
                     array_unshift($_SESSION['requests'], [
                         "y" => $radioy,
                         "x" => $radiox,
@@ -90,6 +101,19 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
                         "date" => date('m/d/Y h:i:s a', time()),
                         "runtime" => round(microtime(true) - $start, 5)
                     ]);
+                } else {
+                    if (!$validR) {
+                        echo "НЕ ВАЛИДНЫЙ РАДИУССС!";
+                    }
+
+                    if (!$validY) {
+                        echo("НЕ ВАЛИДНЫЙ ИГРИК!");
+                    }
+
+                    if (!$validX) {
+                        echo("НЕ ВАЛИДНЫЙ ИКККС!");
+                    }
+
                 }
             }
 
@@ -123,7 +147,7 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
 
     <div id="content">
         <h2>Вводи скорее кординаты</h2>
-        <form action="main.php" method="get">
+        <form action="main.php" method="get" onsubmit="verify()">
 
         <td align="right" width="70%">
             <h2 id="enterx">
@@ -135,9 +159,9 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
             <label for="radiox-1">-1</label><input id="radiox-1" name="radiox" type="radio" value="-1" required/>
             <label for="radiox0">0</label><input id="radiox0" name="radiox" type="radio" value="0" required/>
             <label for="radiox1">1</label><input id="radiox1" name="radiox" type="radio" value="1" required/>
-            <label for="radiox2">2</label><input id="radiox2" name="radiox" type="radio" value="2"required/>
-            <label for="radiox3">3</label><input id="radiox3" name="radiox" type="radio" value="3"required/>
-            <label for="radiox4">4</label><input id="radiox4" name="radiox" type="radio" value="4"required/>
+            <label for="radiox2">2</label><input id="radiox2" name="radiox" type="radio" value="2" required/>
+            <label for="radiox3">3</label><input id="radiox3" name="radiox" type="radio" value="3" required/>
+            <label for="radiox4">4</label><input id="radiox4" name="radiox" type="radio" value="4" required/>
             <p id="messagex" ><br></p>
 
             <h2 id="entery">
@@ -149,6 +173,7 @@ if (!isset($_SESSION['requests']) || !is_array($_SESSION['requests'])) {
             <h2 id="enterr">
                 Выберите R:
             </h2>
+
             <label for="r1">1</label><input id="r1" name="radius" type="checkbox" value="1" />
             <label for="r2">2</label><input id="r2" name="radius" type="checkbox" value="2" />
             <label for="r3">3</label><input id="r3" name="radius" type="checkbox" value="3" />
